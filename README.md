@@ -92,7 +92,8 @@ DTOs: Prevent entity over-exposure
 
 Entities: Pure persistence models
 
-🛠 Technology Stack
+---
+## 🛠 Technology Stack
 Layer	Technology
 Language	Java 21
 Framework	Spring Boot
@@ -124,20 +125,15 @@ User logs in → JWT generated
 Client sends Authorization: Bearer <token>
 
 JWT filter validates token
-
 User identity resolved from token
-
 Access granted or denied
-
 Why This Design?
-
 Scalable
-
 No server-side sessions
-
 Industry-standard approach
 
-📚 Course & Content Model
+---
+## 📚 Course & Content Model
 Hierarchy
 Course
  └── Topic
@@ -151,7 +147,8 @@ Loaded via seed data
 
 No admin or CRUD APIs (by design)
 
-🎓 Enrollment System
+---
+## 🎓 Enrollment System
 Rules Enforced
 
 A user can enroll only once in a course
@@ -170,7 +167,8 @@ Enroll in course
 
 View my enrollments
 
-📊 Progress Tracking System
+---
+## 📊 Progress Tracking System
 Subtopic Completion
 
 Users can mark a subtopic as completed
@@ -199,7 +197,8 @@ Completed subtopics with timestamps
 
 This ensures accurate, per-course learning tracking.
 
-🔍 Search Implementation
+---
+## 🔍 Search Implementation
 Default (Implemented)
 
 PostgreSQL-based keyword search
@@ -228,7 +227,8 @@ No external dependency
 
 Easy deployment
 
-❗ Error Handling Strategy
+---
+## ❗ Error Handling Strategy
 
 All errors follow a consistent JSON structure:
 
@@ -260,7 +260,8 @@ Global exception handler
 
 Custom exception classes
 
-📄 API Documentation (Swagger)
+---
+## 📄 API Documentation (Swagger)
 
 Swagger UI is enabled
 
@@ -268,11 +269,13 @@ JWT authorization supported inside Swagger
 
 Entire system can be tested via Swagger alone
 
-📌 Swagger URL:
+---
+## 📌 Swagger URL:
 
 /swagger-ui.html
 
-⚙️ Configuration & Environment Variables
+---
+## ⚙️ Configuration & Environment Variables
 
 All sensitive and environment-specific values are externalized.
 
@@ -287,7 +290,8 @@ JWT_EXPIRATION=86400
 DDL_AUTO=update
 
 
-📌 This makes the application production-ready and deployment-friendly.
+---
+## 📌 This makes the application production-ready and deployment-friendly.
 
 🌱 Seed Data
 
@@ -299,7 +303,8 @@ Ensures reviewer can test immediately
 
 Content is consistent and deterministic
 
-🚀 Deployment
+---
+## 🚀 Deployment
 
 Deployed on Railway
 
@@ -309,7 +314,8 @@ Environment variables managed via Railway dashboard
 
 Swagger UI enabled in deployed environment
 
-❌ What Is Intentionally Not Implemented
+---
+## ❌ What Is Intentionally Not Implemented
 
 To keep the scope focused, the following are excluded:
 
@@ -329,7 +335,8 @@ Role-based access control
 
 This keeps the project aligned with core backend learning goals.
 
-🔎 Elasticsearch (Optional / Bonus)
+---
+## 🔎 Elasticsearch (Optional / Bonus)
 Current Status
 
 Elasticsearch configuration files are present in the resources directory
@@ -346,7 +353,8 @@ Allows future enhancement without redesign
 
 Aligns with bonus evaluation criteria
 
-✅ Evaluation Readiness
+---
+## ✅ Evaluation Readiness
 
 This project demonstrates:
 
@@ -366,8 +374,11 @@ Swagger-based testing
 
 Designed specifically for academic review + internship evaluation.
 
-👤 Author
+---
+## 👤 Author
 
 Pritam Kumar Branwal
+
 Master of Computer Applications (MCA)
+
 Backend Developer – Java & Spring Boot
