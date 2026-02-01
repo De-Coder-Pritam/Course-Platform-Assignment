@@ -1,0 +1,42 @@
+package com.courseplatform.search.service;
+
+import com.courseplatform.course.entity.Course;
+import com.courseplatform.course.repository.CourseRepository;
+import com.courseplatform.search.document.CourseSearchDocument;
+import com.courseplatform.search.repository.CourseSearchRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class SearchIndexService {
+
+    private final CourseRepository courseRepository;
+    private final CourseSearchRepository searchRepository;
+
+    public void indexAll() {
+
+        if (searchRepository.count() > 0) {
+            return; // already indexed
+        }
+
+        for (Course course : courseRepository.findAll()) {
+            course.getTopics().forEach(topic ->
+                    topic.getSubtopics().forEach(subtopic -> {
+
+                        CourseSearchDocument doc = new CourseSearchDocument();
+                        doc.setId(course.getId() + "_" + subtopic.getId());
+                        doc.setCourseId(course.getId());
+                        doc.setCourseTitle(course.getTitle());
+                        doc.setCourseDescription(course.getDescription());
+                        doc.setTopicTitle(topic.getTitle());
+                        doc.setSubtopicId(subtopic.getId());
+                        doc.setSubtopicTitle(subtopic.getTitle());
+                        doc.setSubtopicContent(subtopic.getContent());
+
+                        searchRepository.save(doc);
+                    })
+            );
+        }
+    }
+}

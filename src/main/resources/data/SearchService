@@ -1,0 +1,84 @@
+package com.courseplatform.search.service;
+
+import com.courseplatform.search.document.CourseSearchDocument;
+import com.courseplatform.search.dto.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+public class SearchService {
+
+    private final ElasticsearchOperations operations;
+
+    public SearchResponseDto search(String query) {
+
+        Criteria criteria = new Criteria("courseTitle")
+                .boost(3.0f)
+                .contains(query)
+                .or(new Criteria("topicTitle")
+                        .boost(2.0f)
+                        .contains(query))
+                .or(new Criteria("subtopicTitle")
+                        .boost(2.0f)
+                        .contains(query))
+                .or(new Criteria("subtopicContent")
+                        .contains(query));
+
+        CriteriaQuery searchQuery = new CriteriaQuery(criteria);
+
+        var hits = operations.search(searchQuery, CourseSearchDocument.class);
+
+        Map<String, SearchResultDto> resultMap = new LinkedHashMap<>();
+
+        hits.forEach(hit -> {
+            CourseSearchDocument doc = hit.getContent();
+
+            SearchMatchDto match = new SearchMatchDto(
+                    "subtopic",
+                    doc.getTopicTitle(),
+                    doc.getSubtopicId(),
+                    doc.getSubtopicTitle(),
+                    buildSnippet(doc.getSubtopicContent(), query)
+            );
+
+            resultMap
+                    .computeIfAbsent(
+                            doc.getCourseId(),
+                            id -> new SearchResultDto(
+                                    id,
+                                    doc.getCourseTitle(),
+                                    new ArrayList<>()
+                            )
+                    )
+                    .getMatches()
+                    .add(match);
+        });
+
+        return new SearchResponseDto(
+                query,
+                new ArrayList<>(resultMap.values())
+        );
+    }
+
+    private String buildSnippet(String content, String query) {
+
+        String lower = content.toLowerCase();
+        String q = query.toLowerCase();
+
+        int index = lower.indexOf(q);
+        if (index == -1) {
+            return content.substring(0, Math.min(120, content.length())) + "...";
+        }
+
+        int start = Math.max(0, index - 40);
+        int end = Math.min(content.length(), index + q.length() + 40);
+
+        return "..." + content.substring(start, end) + "...";
+    }
+}

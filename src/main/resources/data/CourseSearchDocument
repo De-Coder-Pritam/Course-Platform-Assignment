@@ -1,0 +1,23 @@
+package com.courseplatform.search.document;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Data
+@Document(indexName = "course_search")
+public class CourseSearchDocument {
+
+    @Id
+    private String id; // courseId + subtopicId (unique)
+
+    private String courseId;
+    private String courseTitle;
+    private String courseDescription;
+
+    private String topicTitle;
+
+    private String subtopicId;
+    private String subtopicTitle;
+    private String subtopicContent;
+}

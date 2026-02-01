@@ -1,0 +1,10 @@
+0️⃣ Create Spring Boot project with correct dependencies
+1️⃣ Entity mapping based on IDs
+2️⃣ Seed loader using this JSON
+3️⃣ Public course browsing APIs
+4️⃣ Basic search (Postgres)
+5️⃣ Auth + JWT
+6️⃣ Enrollment logic
+7️⃣ Progress tracking
+8️⃣ Elasticsearch integration
+9️⃣ Semantic search (optional)

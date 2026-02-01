@@ -1,0 +1,8 @@
+package com.courseplatform.search.repository;
+
+import com.courseplatform.search.document.CourseSearchDocument;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+
+public interface CourseSearchRepository
+        extends ElasticsearchRepository<CourseSearchDocument, String> {
+}

@@ -1,0 +1,4 @@
+@EventListener(ApplicationReadyEvent.class)
+public void onReady() {
+    searchIndexService.indexAll();
+}
